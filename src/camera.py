@@ -55,6 +55,8 @@ class CameraTP:
         self.view_angles.y      = -15 * DEG2RAD
         self.resize_tp_orbit_camera_view()
 
+        self.mouse_sensitivity = 800.0
+
     def resize_tp_orbit_camera_view(self):
         width = get_screen_width()
         height = get_screen_height()
@@ -73,6 +75,9 @@ class CameraTP:
                 disable_cursor()
             else:
                 enable_cursor()
+        
+        mouse_delta_pos = get_mouse_delta()
+        use_mouse = is_mouse_button_down(MOUSE_BUTTON_LEFT)
 
         turn_rotation = self.get_speed_for_axis(CameraControls.TURN_RIGHT, self.turn_speed.x) - \
                        self.get_speed_for_axis(CameraControls.TURN_LEFT, self.turn_speed.x)
@@ -82,8 +87,13 @@ class CameraTP:
 
         if turn_rotation != 0:
             self.view_angles.x -= turn_rotation * DEG2RAD
+        elif use_mouse and self.focused:
+            self.view_angles.x -= (mouse_delta_pos.x / self.mouse_sensitivity)
+
         if tilt_rotation:
             self.view_angles.y += tilt_rotation * DEG2RAD
+        elif use_mouse and self.focused:
+            self.view_angles.y += (mouse_delta_pos.y / -self.mouse_sensitivity)
 
         if self.view_angles.y < self.minimum_view_y * DEG2RAD:
             self.view_angles.y = self.minimum_view_y * DEG2RAD
