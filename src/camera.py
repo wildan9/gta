@@ -99,6 +99,11 @@ class CameraTP:
             self.view_angles.y = self.minimum_view_y * DEG2RAD
         elif self.view_angles.y > self.maximum_view_y * DEG2RAD:
             self.view_angles.y = self.maximum_view_y * DEG2RAD
+        
+        if (self.camera_pullback_distance > 3 and get_mouse_wheel_move() < 0.0):
+            self.camera_pullback_distance -= 0.1
+        if (self.camera_pullback_distance < 6 and get_mouse_wheel_move() > 0.0):
+            self.camera_pullback_distance += 0.1
 
         cam_pos = Vector3(0, 0, self.camera_pullback_distance)
         tilt_mat = matrix_rotate_x(self.view_angles.y)
