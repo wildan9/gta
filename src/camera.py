@@ -29,7 +29,7 @@ class CameraControls:
 
 class CameraTP:
     def __init__(self, fovy, pos):
-        self.controls_keys  = [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN, KEY_LEFT_SHIFT]
+        self.controls_keys  = [KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN]
         self.turn_speed     = Vector2(90, 90)
         self.minimum_view_y = -89.0
         self.maximum_view_y = 0.0
